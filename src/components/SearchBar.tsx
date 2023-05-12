@@ -2,8 +2,6 @@ import { createSignal } from "solid-js";
 import { ResultType } from "../App";
 
 type PropsType = {
-    // searchText:() => string,
-    // setSearchText:(value?: string | ((prev?: string) => string)) => string,
     getAddressData: (value: string) => void
 }
 
@@ -21,7 +19,7 @@ export default function SearchBar(props: PropsType) {
           placeholder='input a token address'
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              getAddressData(e.currentTarget.value);
+              getAddressData(e.currentTarget.value.trim());
               val.value=""
             }
           }}
@@ -30,10 +28,9 @@ export default function SearchBar(props: PropsType) {
         <button 
           class="px-3 my-2 border-2 border-slate-200 rounded-lg"
           onClick={() => {
-              getAddressData(val.value)
+              getAddressData(val.value.trim())
               val.value=""
-            }
-          }
+            }}
           >
             Search
           </button>
