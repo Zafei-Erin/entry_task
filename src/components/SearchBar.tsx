@@ -14,7 +14,7 @@ export default function SearchBar(props: PropsType) {
       <div class="w-full flex sm:text-lg md:text-xl text-white">
         <input 
           ref={val}
-          class='flex-1 bg-transparent py-3 px-4 outline-none sm:py-4 sm:px-5 focus:placeholder-gray-200 border-b-2 border-transparent focus:border-white'
+          class='flex-1 bg-transparent py-3 px-4 outline-none mr-3 sm:py-4 sm:px-5 focus:placeholder-gray-200 border-b-2 border-transparent focus:border-white'
           type="text" 
           placeholder='input a token address'
           onKeyDown={(e) => {

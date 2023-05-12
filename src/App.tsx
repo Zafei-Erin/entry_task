@@ -1,6 +1,9 @@
 import { Component, createResource, createSignal,Show } from 'solid-js';
 import SearchBar from './components/SearchBar';
 import ResultCard from './components/ResultCard';
+import Loader from './components/Loader';
+import warning from './assets/caution.svg'
+import error from './assets/error.svg'
 
 export type ResultType = {
   token: string,
@@ -20,6 +23,8 @@ const App: Component = () => {
       setStatus("empty")
       return
     }
+
+    setStatus("loading")
 
     fetchUser(address).then((res)=>{
       if(res.code) {
@@ -42,16 +47,22 @@ const App: Component = () => {
   
   return (
     <div class='h-screen bg-gray-800 flex flex-col items-center justify-center'>
+
       <div class='sm:w-8/12 md:w-3/5 lg:w-1/3'>
         <SearchBar getAddressData={getAddressData}/>
         <Show when={status() === 'empty'}>
-          <div class="mt-6 py-3 px-4 sm:py-4 sm:px-5 sm:text-lg md:text-xl bg-slate-200 text-slate-800 rounded-lg">
-              <h1>please enter a token addr</h1>
+          <div class="mt-6 py-3 px-4 sm:py-4 sm:px-5 sm:text-lg md:text-xl text-zinc-50 rounded-lg stroke-white flex gap-4">
+            <img src={warning}/> please enter a token addr
           </div>
         </Show>
         <Show when={status() === 'error'}>
-          <div class="mt-6 py-3 px-4 sm:py-4 sm:px-5 sm:text-lg md:text-xl bg-slate-200 text-slate-800 rounded-lg">
-              <h1>No data return, please check your token addr</h1>
+          <div class="mt-6 py-3 px-4 sm:py-4 sm:px-5 sm:text-lg md:text-xl bg-slate-200 text-slate-800 rounded-lg flex gap-4">
+          <img src={error}/> No data return, please check your token addr
+          </div>
+        </Show>
+        <Show when={status() === 'loading'}>
+          <div class='flex items-center justify-center mt-6'>
+            <Loader/>
           </div>
         </Show>
         <Show when={status() === 'success'}>
@@ -63,3 +74,4 @@ const App: Component = () => {
 };
 
 export default App;
+
