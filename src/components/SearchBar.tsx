@@ -2,13 +2,12 @@ import { createSignal } from "solid-js";
 import { ResultType } from "../App";
 
 type PropsType = {
-    getAddressData: (value: string) => void
+  setSearchText: (value: string) => void
 }
 
 let val: HTMLInputElement
 
 export default function SearchBar(props: PropsType) {
-    const {getAddressData} = props
   
     return (
       <div class="w-full flex items-center justify-center text-sm sm:text-lg md:text-xl text-white">
@@ -19,7 +18,7 @@ export default function SearchBar(props: PropsType) {
           placeholder='Input a token address'
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              getAddressData(e.currentTarget.value.trim());
+              props.setSearchText(e.currentTarget.value.trim());
               val.value=""
             }
           }}
@@ -28,7 +27,7 @@ export default function SearchBar(props: PropsType) {
         <button 
           class="grow-0 px-2 my-2 border-2 border-slate-200 rounded-lg"
           onClick={() => {
-              getAddressData(val.value.trim())
+              props.setSearchText(val.value.trim())
               val.value=""
             }}
           >
