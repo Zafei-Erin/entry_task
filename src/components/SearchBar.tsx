@@ -25,7 +25,7 @@ export default function SearchBar(props: PropsType) {
         />
 
         <button 
-          class="grow-0 px-2 my-2 border-2 border-slate-200 rounded-lg"
+          class="grow-0 px-2 my-2 border-2 border-slate-200 rounded-lg hover:bg-white hover:text-gray-800 focus:ring-2"
           onClick={() => {
               props.setSearchText(val.value.trim())
               val.value=""

@@ -39,25 +39,22 @@ const App: Component = () => {
           <span class='flex items-center justify-center mt-6'>
             <Loader/>
           </span> }>
-              <Switch>
-                <Match when={searchText() === undefined}>
-                  <></>
-                </Match>
-                <Match when={searchText() === ''}>
-                  <div class="w-full mt-6 py-3 px-4 sm:py-4 sm:px-5 text-sm sm:text-lg md:text-xl text-zinc-50 flex items-center gap-4">
-                    <img src={warning}/> please enter a token address.
-                  </div>
-                </Match>
-                <Match when={rawResult()?.message}>
-                  <div class="w-full mt-6 py-3 px-4 sm:py-4 sm:px-5 text-sm sm:text-md md:text-lg bg-gray-700 text-gray-50 rounded-lg flex gap-4">
-                    <img src={error}/> No data return, please check your token address.
-                  </div>
-                </Match>
-                {/* success case */}
-                <Match when={!rawResult.loading && !rawResult.error && rawResult()}>
-                  <ResultCard rawResult={rawResult()?.data}/>
-                </Match>
-              </Switch>
+            <Switch>
+              <Match when={searchText() === ''}>
+                <div class="w-full mt-6 py-3 px-4 sm:py-4 sm:px-5 text-sm sm:text-lg md:text-xl text-zinc-50 flex items-center gap-4">
+                  <img src={warning}/> please enter a token address.
+                </div>
+              </Match>
+              <Match when={rawResult()?.message}>
+                <div class="w-full mt-6 py-3 px-4 sm:py-4 sm:px-5 text-sm sm:text-md md:text-lg bg-gray-700 text-gray-50 rounded-lg flex gap-4">
+                  <img src={error}/> No data return, please check your token address.
+                </div>
+              </Match>
+              {/* success case */}
+              <Match when={!rawResult.loading && !rawResult.error && rawResult()}>
+                <ResultCard rawResult={rawResult()?.data}/>
+              </Match>
+            </Switch>
           </Suspense>
       </div>
     </div>
