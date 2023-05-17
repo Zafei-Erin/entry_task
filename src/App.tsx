@@ -32,7 +32,7 @@ const App: Component = () => {
   return (
     <div class='px-3 h-screen bg-gray-900 flex flex-col items-center justify-center'>
 
-      <div class='w-2/3 sm:w-8/12 md:w-3/5 lg:w-1/3 '>
+      <div class='w-3/4 sm:w-8/12 md:w-3/5 lg:w-1/3 '>
         <SearchBar setSearchText={setSearchText} />
         
         <Suspense fallback={
