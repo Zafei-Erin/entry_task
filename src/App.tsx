@@ -1,9 +1,9 @@
-import { Component, createEffect, createResource, createSignal,ErrorBoundary,Match,Show, Suspense, Switch } from 'solid-js';
-import SearchBar from './components/SearchBar';
-import ResultCard from './components/ResultCard';
+import { Component, createResource, createSignal, Match, onMount, Suspense, Switch } from 'solid-js';
+import warning from './assets/caution.svg';
+import error from './assets/error.svg';
 import Loader from './components/Loader';
-import warning from './assets/caution.svg'
-import error from './assets/error.svg'
+import ResultCard from './components/ResultCard';
+import SearchBar from './components/SearchBar';
 
 export type ResultType = {
   name: string,
@@ -13,21 +13,26 @@ export type ResultType = {
 }
 
 const fetchResult = async (addr: string) => {
-  if(addr==""){
-    return
-  }
-  const res = await fetch(`https://phoenix-lcd.terra.dev/cosmwasm/wasm/v1/contract/${addr}/smart/ewogICJ0b2tlbl9pbmZvIjoge30KfQ==`)
-
-  return res.json()
+  
 }
 
 const App: Component = () => {
   const [searchText, setSearchText] = createSignal<string>()
-  const [rawResult] = createResource(searchText,fetchResult);
+  const [rawResult] = createResource(searchText, async (addr) => {
+    if(addr==""){
+      return
+    }
+    const res = await fetch(`https://phoenix-lcd.terra.dev/cosmwasm/wasm/v1/contract/${addr}/smart/ewogICJ0b2tlbl9pbmZvIjoge30KfQ==`)
+    return res.json()
+  });
 
-  // createEffect(() => {
-  //   console.log({ res: rawResult() })
-  // })
+  const [data, setData] = createSignal<number>(1);
+
+  onMount(() => {
+    setInterval(() => {
+      setData((p) => p+1)
+    }, 123)
+  })
 
   return (
     <div class='px-3 h-screen bg-gray-900 flex flex-col items-center justify-center'>
@@ -52,7 +57,7 @@ const App: Component = () => {
               </Match>
               {/* success case */}
               <Match when={!rawResult.loading && !rawResult.error && rawResult()}>
-                <ResultCard rawResult={rawResult()?.data}/>
+                <ResultCard data={data()} rawResult={rawResult()?.data}/>
               </Match>
             </Switch>
           </Suspense>
